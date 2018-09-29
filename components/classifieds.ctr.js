@@ -5,6 +5,7 @@
         .controller('classifiedsCtrl', function ($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
             classifiedsFactory.getClassifieds().then(function (classifieds) {
                 $scope.classifieds = classifieds.data;
+                $scope.categories = getCategories($scope.classifieds);
             })
 
             // mock data of user contact 
@@ -70,6 +71,17 @@
                     .position('top, right')
                     .hideDelay(3000)
                 );
+            }
+
+            // getting categories
+            function getCategories(classifieds) {
+                var categories = [];
+                angular.forEach(classifieds, function (item) {
+                    angular.forEach(item.categories, function (category) {
+                        categories.push(category);
+                    });
+                });
+                return _.uniq(categories); // lodash function 
             }
         });
 })();

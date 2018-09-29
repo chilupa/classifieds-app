@@ -2,3 +2,9 @@
 button .material-icons{
     margin-bottom: 13px;
 } 
+
+/* category dropdown and clear button positioning */
+.categorySelect, .clearFilter
+{
+ margin-bottom: 24px;
+}
