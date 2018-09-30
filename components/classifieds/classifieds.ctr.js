@@ -18,10 +18,19 @@
             vm.editing;
             vm.classified;
 
-
             classifiedsFactory.getClassifieds().then(function (classifieds) {
                 vm.classifieds = classifieds.data;
                 vm.categories = getCategories(vm.classifieds);
+            });
+
+            $scope.$on('newClassified', function(event, classified){
+                classified.id = vm.classifieds.length + 1;
+                vm.classifieds.push(classified);
+                showToast('Classified saved!');
+            });
+
+            $scope.$on('editSaved', function(event, message){
+                showToast(message);
             })
 
             // mock data of user contact 
@@ -33,8 +42,8 @@
 
             // open sidebar 
             function openSidebar() {
-               // $mdSidenav('left').open(); // took the 'left' parameter from md-component-id in view 
-               $state.go('classifieds.new');
+                // $mdSidenav('left').open(); // took the 'left' parameter from md-component-id in view 
+                $state.go('classifieds.new');
             }
 
             // close sidebar 
@@ -55,9 +64,10 @@
 
             //edit classified
             function editClassified(classified) {
-                vm.editing = true;
-                openSidebar();
-                vm.classified = classified;
+                $state.go('classifieds.edit', {
+                    id: classified.id,
+                    classified: classified
+                });
             }
 
             // save edit 
