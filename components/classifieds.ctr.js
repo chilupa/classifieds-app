@@ -3,8 +3,25 @@
     angular
         .module('ngClassifieds')
         .controller('classifiedsCtrl', function ($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
+
+            var vm = this; // controller as syntax 
+
+            vm.openSidebar = openSidebar;
+            vm.closeSidebar = closeSidebar;
+            vm.saveClassified = saveClassified;
+            vm.editClassified = editClassified;
+            vm.saveEdit = saveEdit;
+            vm.deleteClassified = deleteClassified;
+
+            vm.classifieds;
+            vm.categories;
+            vm.editing;
+            vm.classified;
+
+
             classifiedsFactory.getClassifieds().then(function (classifieds) {
-                $scope.classifieds = classifieds.data;
+                vm.classifieds = classifieds.data;
+                vm.categories = getCategories(vm.classifieds);
             })
 
             // mock data of user contact 
@@ -15,51 +32,51 @@
             }
 
             // open sidebar 
-            $scope.openSidebar = function () {
+            function openSidebar() {
                 $mdSidenav('left').open(); // took the 'left' parameter from md-component-id in view 
             }
 
             // close sidebar 
-            $scope.closeSidebar = function () {
+            function closeSidebar() {
                 $mdSidenav('left').close();
             }
 
             //save classified
-            $scope.saveClassified = function (classified) {
+            function saveClassified(classified) {
                 if (classified) {
                     classified.contact = contact;
-                    $scope.classifieds.push(classified);
-                    $scope.classified = {};
-                    $scope.closeSidebar();
+                    vm.classifieds.push(classified);
+                    vm.classified = {};
+                    closeSidebar();
                     showToast('Classified Saved!');
                 }
             }
 
             //edit classified
-            $scope.editClassified = function (classified) {
-                $scope.editing = true;
-                $scope.openSidebar();
-                $scope.classified = classified;
+            function editClassified(classified) {
+                vm.editing = true;
+                openSidebar();
+                vm.classified = classified;
             }
 
             // save edit 
-            $scope.saveEdit = function () {
-                $scope.editing = false;
-                $scope.classified = {};
-                $scope.closeSidebar();
+            function saveEdit() {
+                vm.editing = false;
+                vm.classified = {};
+                closeSidebar();
                 showToast('Edit Saved!');
             }
 
             // delete classified
-            $scope.deleteClassified = function (event, classified) {
+            function deleteClassified(event, classified) {
                 var confirm = $mdDialog.confirm()
                     .title('Are you sure want to delete ' + classified.title + '?')
                     .ok('Yes')
                     .cancel('No')
                     .targetEvent(event);
                 $mdDialog.show(confirm).then(function () {
-                    var index = $scope.classifieds.indexOf(classified);
-                    $scope.classifieds.splice(index, 1);
+                    var index = vm.classifieds.indexOf(classified);
+                    vm.classifieds.splice(index, 1);
                 }, function () {});
             }
 
@@ -70,6 +87,17 @@
                     .position('top, right')
                     .hideDelay(3000)
                 );
+            }
+
+            // getting categories
+            function getCategories(classifieds) {
+                var categories = [];
+                angular.forEach(classifieds, function (item) {
+                    angular.forEach(item.categories, function (category) {
+                        categories.push(category);
+                    });
+                });
+                return _.uniq(categories); // lodash function 
             }
         });
 })();
