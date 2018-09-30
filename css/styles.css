@@ -1,30 +1,36 @@
 /* '+' icon positioning */
-button .material-icons{
+button .material-icons {
     margin-bottom: 13px;
-} 
+}
 
 /* category dropdown and clear button positioning */
-.categorySelect, .clearFilter
-{
- margin-bottom: 24px;
+.categorySelect,
+.clearFilter {
+    margin-bottom: 24px;
 }
 
 /* classified animation */
-.classified.ng-enter, .classified.ng-move {
+.classified.ng-enter,
+.classified.ng-move {
     transition: 0.4s all;
     opacity: 0;
-  }
-  
-  .classified.ng-enter.ng-enter-active, .classified.ng-move.ng-move-active {
+}
+
+.classified.ng-enter.ng-enter-active,
+.classified.ng-move.ng-move-active {
     opacity: 1;
-  }
+}
 
-  .classified.ng-leave{
-      animation: 0.4s fade_classified;
-  }
+.classified.ng-leave {
+    animation: 0.4s fade_classified;
+}
 
-  @keyframes fade_classified{
-      from { opacity: 1;}
-      to { opacity: 0;}
-  }
+@keyframes fade_classified {
+    from {
+        opacity: 1;
+    }
 
+    to {
+        opacity: 0;
+    }
+}
