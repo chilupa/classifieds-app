@@ -1,0 +1,30 @@
+<!-- Add a classified (Sidenav) -->
+<md-sidenav class="md-sidenav-left md-wideframe-z2" md-component-id="left">
+    <md-toolbar>
+        <h1 class="md-toolbar-tools">Add a Classified</h1>
+    </md-toolbar>
+
+    <md-content layout-padding>
+        <form>
+            <md-input-container>
+                <label for="title">Title</label>
+                <input ng-model="vm.classified.title" type="text" id="title" md-autofocus>
+            </md-input-container>
+            <md-input-container>
+                <label for="price">Price</label>
+                <input ng-model="vm.classified.price" type="text" id="price">
+            </md-input-container>
+            <md-input-container>
+                <label for="description">Description</label>
+                <textarea ng-model="vm.classified.description" type="text" id="description"></textarea>
+            </md-input-container>
+            <md-input-container>
+                <label for="image">Image Link</label>
+                <input ng-model="vm.classified.image" type="text" id="image">
+            </md-input-container>
+            <md-button ng-if="!vm.editing" ng-click="vm.saveClassified(vm.classified)" class="md-primary">Save</md-button>
+            <md-button ng-click="vm.saveEdit()" ng-if="vm.editing" class="md-primary">Save Edit</md-button>
+            <md-button ng-click="vm.closeSidebar()" class="md-warn">Cancel</md-button>
+        </form>
+    </md-content>
+</md-sidenav>

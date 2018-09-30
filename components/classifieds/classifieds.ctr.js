@@ -2,7 +2,7 @@
     "use strict";
     angular
         .module('ngClassifieds')
-        .controller('classifiedsCtrl', function ($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
+        .controller('classifiedsCtrl', function ($scope, $state, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 
             var vm = this; // controller as syntax 
 
@@ -33,7 +33,8 @@
 
             // open sidebar 
             function openSidebar() {
-                $mdSidenav('left').open(); // took the 'left' parameter from md-component-id in view 
+               // $mdSidenav('left').open(); // took the 'left' parameter from md-component-id in view 
+               $state.go('classifieds.new');
             }
 
             // close sidebar 
